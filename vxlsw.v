@@ -61,7 +61,15 @@ struct C.lxw_format {
 }
 
 pub struct Format {
-    ptr &C.lxw_format = voidptr(0)
+mut:
+    ptr &C.lxw_format 
+}
+
+fn C.workbook_add_format(wb &C.lxw_workbook) &C.lxw_format
+pub fn (wb Workbook)add_format() Format {
+    return Format {
+        ptr: C.workbook_add_format(wb.ptr)
+    }
 }
 
 fn C.lxw_format_new() &C.lxw_format 
@@ -84,6 +92,23 @@ pub fn (f Format)set_font_name(font_name string) {
 fn C.format_set_font_size(format &C.lxw_format, size f64)
 pub fn (f Format)set_font_size(size u8) {
     C.format_set_font_size(f.ptr, f64(size))
+}
+
+fn C.format_set_font_color(format &C.lxw_format, color C.lxw_color_t)
+pub fn (f Format)set_font_color(color DefinedColors) {
+    unsafe {
+        C.format_set_font_color(f.ptr, C.lxw_color_t(color))
+    }
+}
+
+fn C.format_set_bold(format &C.lxw_format)
+pub fn (f Format)set_bold() {
+    C.format_set_bold(f.ptr)
+}
+
+fn C.format_set_italic(format &C.lxw_format)
+pub fn (f Format)set_italic() {
+    C.format_set_italic(f.ptr)
 }
 
 pub enum FormatUnderlines as u32 {
