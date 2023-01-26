@@ -64,6 +64,124 @@ pub struct Format {
     ptr &C.lxw_format = voidptr(0)
 }
 
+fn C.lxw_format_new() &C.lxw_format 
+pub fn new_format() Format {
+    return Format {
+        ptr: C.lxw_format_new()
+    }
+}
+
+fn C.lxw_format_free(format &C.lxw_format)
+pub fn (mut f Format)deallocate() {
+    C.lxw_format_free(f.ptr)
+}
+
+fn C.format_set_font_name(format &C.lxw_format, font_name &char)
+pub fn (f Format)set_font_name(font_name string) {
+    C.format_set_font_name(f.ptr, &char(font_name.str))
+}
+
+fn C.format_set_font_size(format &C.lxw_format, size f64)
+pub fn (f Format)set_font_size(size u8) {
+    C.format_set_font_size(f.ptr, f64(size))
+}
+
+pub enum FormatUnderlines as u32 {
+    @none = C.LXW_UNDERLINE_NONE
+    single = C.LXW_UNDERLINE_SINGLE
+    double = C.LXW_UNDERLINE_DOUBLE
+    single_accounting = C.LXW_UNDERLINE_SINGLE_ACCOUNTING
+    double_accounting = C.LXW_UNDERLINE_DOUBLE_ACCOUNTING
+}
+
+pub enum FormatScrips as u32 {
+    superscript = C.LXW_FONT_SUPERSCRIPT
+    subscript = C.LXW_FONT_SUBSCRIPT
+}
+
+pub enum FormatAlignments as u32 {
+    @none = C.LXW_ALIGN_NONE
+    left = C.LXW_ALIGN_LEFT
+    center = C.LXW_ALIGN_CENTER
+    right = C.LXW_ALIGN_RIGHT
+    fill = C.LXW_ALIGN_FILL
+    justify = C.LXW_ALIGN_JUSTIFY
+    across = C.LXW_ALIGN_CENTER_ACROSS
+    distributed = C.LXW_ALIGN_DISTRIBUTED
+    vertical_top = C.LXW_ALIGN_VERTICAL_TOP
+    vertical_bottom = C.LXW_ALIGN_VERTICAL_BOTTOM
+    vertical_center = C.LXW_ALIGN_VERTICAL_CENTER
+    vertical_justify = C.LXW_ALIGN_VERTICAL_JUSTIFY
+    vertical_distributed = C.LXW_ALIGN_VERTICAL_DISTRIBUTED
+}
+
+pub enum FormatDiagonalTypes as u32 {
+    border_up = C.LXW_DIAGONAL_BORDER_UP
+    border_down = C.LXW_DIAGONAL_BORDER_DOWN
+    border_up_down = C.LXW_DIAGONAL_BORDER_UP_DOWN
+}
+
+pub enum FormatPatterns as u32 {
+    @none = C.LXW_PATTERN_NONE
+    solid = C.LXW_PATTERN_SOLID
+    medium_gray = C.LXW_PATTERN_MEDIUM_GRAY
+    dark_gray = C.LXW_PATTERN_DARK_GRAY
+    light_gray = C.LXW_PATTERN_LIGHT_GRAY
+    dark_horizontal = C.LXW_PATTERN_DARK_HORIZONTAL
+    dark_vertical = C.LXW_PATTERN_DARK_VERTICAL
+    dark_down = C.LXW_PATTERN_DARK_DOWN
+    dark_up = C.LXW_PATTERN_DARK_UP
+    dark_grid = C.LXW_PATTERN_DARK_GRID
+    dark_trellis = C.LXW_PATTERN_DARK_TRELLIS
+    light_horizontal = C.LXW_PATTERN_LIGHT_HORIZONTAL
+    light_vertical = C.LXW_PATTERN_LIGHT_VERTICAL
+    light_down = C.LXW_PATTERN_LIGHT_DOWN
+    ligh_up = C.LXW_PATTERN_LIGHT_UP
+    light_grid = C.LXW_PATTERN_LIGHT_GRID
+    light_trellis = C.LXW_PATTERN_LIGHT_TRELLIS
+    gray_125 = C.LXW_PATTERN_GRAY_125
+    gray_0625 = C.LXW_PATTERN_GRAY_0625
+}
+
+pub enum FormatBorders as u32 {
+    @none = C.LXW_BORDER_NONE
+    thin = C.LXW_BORDER_THIN
+    medium = C.LXW_BORDER_MEDIUM
+    dashed = C.LXW_BORDER_DASHED
+    dotted = C.LXW_BORDER_DOTTED
+    thick = C.LXW_BORDER_THICK
+    double = C.LXW_BORDER_DOUBLE
+    hair = C.LXW_BORDER_HAIR
+    medium_dashed = C.LXW_BORDER_MEDIUM_DASHED
+    dash_dot = C.LXW_BORDER_DASH_DOT
+    medium_dash_dot = C.LXW_BORDER_MEDIUM_DASH_DOT
+    dash_dot_dot = C.LXW_BORDER_DASH_DOT_DOT
+    medium_dash_dot_dot = C.LXW_BORDER_MEDIUM_DASH_DOT_DOT
+    slant_dash_dot = C.LXW_BORDER_SLANT_DASH_DOT
+}
+
+// lxw_color_t = u32
+
+// DefinedColors
+pub enum DefinedColors as u32 {
+    black = C.LXW_COLOR_BLACK
+    blue = C.LXW_COLOR_BLUE
+    brown = C.LXW_COLOR_BROWN
+    cyan = C.LXW_COLOR_CYAN
+    gray = C.LXW_COLOR_GRAY
+    green = C.LXW_COLOR_GREEN
+    lime = C.LXW_COLOR_LIME
+    magneta = C.LXW_COLOR_MAGENTA
+    navy = C.LXW_COLOR_NAVY
+    orange = C.LXW_COLOR_ORANGE
+    pink = C.LXW_COLOR_PINK
+    purple = C.LXW_COLOR_PURPLE
+    red = C.LXW_COLOR_RED
+    silver = C.LXW_COLOR_SILVER
+    white = C.LXW_COLOR_WHITE
+    yellow = C.LXW_COLOR_YELLOW
+}
+
 /// Error ///
 pub enum ReturnCode as int {
     no_error = C.LXW_NO_ERROR
