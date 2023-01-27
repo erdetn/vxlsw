@@ -57,6 +57,152 @@ pub fn (ws Worksheet)write_string(row u32, col u16, text string, format Format) 
     }
 }
 
+// ChartSheet //
+struct C.lxw_chartsheet {
+}
+pub struct ChartSheet {
+    ptr &C.lxw_chartsheet
+}
+
+fn C.workbook_add_chartsheet(workbook &C.lxw_workbook, sheetname &char) &C.lxw_chartsheet
+pub fn (wb Workbook)add_chartsheet(sheet_name string) ChartSheet {
+    return ChartSheet {
+        ptr: C.workbook_add_chartsheet(wb.ptr, &char(sheet_name.str))
+    }
+}
+
+
+// Chart // 
+pub enum ChartType as u8 {
+    area = C.LXW_CHART_AREA
+    area_stacked = C.LXW_CHART_AREA_STACKED
+    area_stacked_percent = C.LXW_CHART_AREA_STACKED_PERCENT
+    area_bar = C.LXW_CHART_BAR
+    area_bar_stacked = C.LXW_CHART_BAR_STACKED
+    area_bar_stacked_percent = C.LXW_CHART_BAR_STACKED_PERCENT
+    column = C.LXW_CHART_COLUMN
+    column_stacked = C.LXW_CHART_COLUMN_STACKED
+    column_stacked_percent = C.LXW_CHART_COLUMN_STACKED_PERCENT
+    doughnut = C.LXW_CHART_DOUGHNUT
+    line = C.LXW_CHART_LINE
+    line_stacked = C.LXW_CHART_LINE_STACKED
+    line_stacked_percent = C.LXW_CHART_LINE_STACKED_PERCENT
+    pie = C.LXW_CHART_PIE
+    scatter = C.LXW_CHART_SCATTER
+    scatter_straight = C.LXW_CHART_SCATTER_STRAIGHT
+    scatter_straight_with_markers = C.LXW_CHART_SCATTER_STRAIGHT_WITH_MARKERS
+    scatter_smooth = C.LXW_CHART_SCATTER_SMOOTH
+    scatter_smooth_with_markers = C.LXW_CHART_SCATTER_SMOOTH_WITH_MARKERS
+    radar = C.LXW_CHART_RADAR
+    radar_with_markers = C.LXW_CHART_RADAR_WITH_MARKERS
+    radar_filled = C.LXW_CHART_RADAR_FILLED
+}
+
+struct C.lxw_chart {
+}
+
+pub struct Chart {
+    ptr C.lxw_chart 
+}
+
+fn C.workbook_add_chart(wb &C.lxw_workbook, chart_type u8) &C.lxw_chart 
+pub fn (wb Workbook)add_chart(chart_type ChartType) Chart {
+    return unsafe { Chart {
+        ptr: C.workbook_add_chart(wb.ptr, u8(chart_type))
+    }}
+}
+
+// DocProperties //
+struct C.lxw_doc_properties {
+    title &char 
+    subject &char 
+    author &char 
+    manager &char 
+    company &char 
+    category &char 
+    keywords &char 
+    comments &char 
+    status &char 
+    hyperlink_base &char 
+    created &C.time_t 
+}
+type CLxwDocProperties = C.lxw_doc_properties
+
+pub struct DocProperties {
+    title string
+    subject string 
+    author string 
+    manager string 
+    company string 
+    category string 
+    keywords string 
+    comments string 
+    status string 
+    hyperlink_base string
+}
+
+fn C.workbook_set_properties(wb &C.lxw_workbook, dp &C.lxw_doc_properties) C.lxw_error 
+pub fn (wb Workbook)set_properties(doc_properties DocProperties) ReturnCode {
+    unsafe {
+        dp := CLxwDocProperties {
+            title: &char(doc_properties.title.str)
+            subject: &char(doc_properties.subject.str)
+            author: &char(doc_properties.author.str)
+            manager: &char(doc_properties.manager.str)
+            company: &char(doc_properties.company.str)
+            category: &char(doc_properties.category.str)
+            keywords: &char(doc_properties.category.str)
+            comments: &char(doc_properties.comments.str)
+            status: &char(doc_properties.status.str)
+            hyperlink_base: &char(doc_properties.hyperlink_base.str)
+        }
+        rerror := C.workbook_set_properties(wb.ptr, &dp)
+        return ReturnCode(rerror)
+    }
+}
+
+fn C.workbook_set_custom_property_string(workbook &C.lxw_workbook , name &char, value &char) C.lxw_error 
+pub fn (wb Workbook)set_custom_property_string(key string, value string) ReturnCode {
+    unsafe {
+        return ReturnCode(C.workbook_set_custom_property_string(wb.ptr, &char(key.str), &char(value.str)))
+    }
+}
+
+fn C.workbook_set_custom_property_number(workbook &C.lxw_workbook , name &char, value f64) C.lxw_error 
+pub fn (wb Workbook)set_custom_property_number(key string, value f64) ReturnCode {
+    unsafe {
+        return ReturnCode(C.workbook_set_custom_property_number(wb.ptr, &char(key.str), value))
+    }
+}
+
+fn C.workbook_set_custom_property_integer(workbook &C.lxw_workbook, name &char, value i32) C.lxw_error 
+pub fn (wb Workbook)set_custom_property_integer(key string, value i32) ReturnCode {
+    unsafe {
+        return ReturnCode(C.workbook_set_custom_property_integer(wb.ptr, &char(key.str), value))
+    }
+}
+
+fn C.workbook_set_custom_property_boolean(workbook &C.lxw_workbook, name &char, value u8) C.lxw_error 
+pub fn (wb Workbook)set_custom_property_boolean(key string, value bool) ReturnCode {
+    value_u8 := if value {1} else {0}
+    unsafe {
+        return ReturnCode(C.workbook_set_custom_property_boolean(wb.ptr, &char(key.str), value_u8))
+    }
+}
+
+fn C.workbook_define_name(workbook &C.lxw_workbook, name &char, formula &char) C.lxw_error 
+pub fn (wb Workbook)define_name(name string, formula string) ReturnCode {
+    unsafe {
+        return ReturnCode(C.workbook_define_name(wb.ptr, &char(name.str), &char(formula.str)))
+    }
+}
+
+fn C.lxw_workbook_free(wb &C.lxw_workbook)
+pub fn (wb Workbook)deallocate() {
+    C.lxw_workbook_free(wb.ptr)
+}
+
+// Format //
 struct C.lxw_format {
 }
 
