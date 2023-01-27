@@ -643,4 +643,23 @@ pub enum ReturnCode as int {
     image_dimensions = C.LXW_ERROR_IMAGE_DIMENSIONS
 }
 
+fn C.lxw_strerror(error_num C.lxw_error) &char 
+pub fn (rc ReturnCode)message() string {
+    return unsafe {
+        cstring_to_vstring(C.lxw_strerror(C.lxw_error(rc)))
+    }
+}
+
+fn C.lxw_version_id() u16
+pub fn version_id() u16 {
+    return C.lxw_version_id()
+}
+
+fn C.lxw_version() &char
+pub fn version() string {
+    return unsafe {
+        cstring_to_vstring(C.lxw_version())
+    }
+}
+
 
