@@ -111,6 +111,264 @@ pub fn (f Format)set_italic() {
     C.format_set_italic(f.ptr)
 }
 
+fn C.format_set_underline(format &C.lxw_format, style u8)
+pub fn (f Format)set_underline(style FormatUnderlines) {
+    C.format_set_underline(f.ptr, u8(style))
+}
+
+fn C.format_set_font_strikeout(format &C.lxw_format)
+pub fn (f Format)set_font_strikeout() {
+    C.format_set_font_strikeout(f.ptr)
+}
+
+fn C.format_set_font_script(format &C.lxw_format, style u8)
+pub fn (f Format)set_font_script(style FormatScrips) {
+    C.format_set_font_script(f.ptr, u8(style))
+}
+
+fn C.format_set_num_format(format &C.lxw_format, format &char)
+pub fn (f Format)set_number_format(number_format string) {
+    C.format_set_num_format(f.ptr, &char(number_format.str))
+}
+
+/*
+ *   | Index | Index | Format String                                        |
+ *   | ----- | ----- | ---------------------------------------------------- |
+ *   | 0     | 0x00  | `General`                                            |
+ *   | 1     | 0x01  | `0`                                                  |
+ *   | 2     | 0x02  | `0.00`                                               |
+ *   | 3     | 0x03  | `#,##0`                                              |
+ *   | 4     | 0x04  | `#,##0.00`                                           |
+ *   | 5     | 0x05  | `($#,##0_)($#,##0)`                                 |
+ *   | 6     | 0x06  | `($#,##0_)[Red]($#,##0)`                            |
+ *   | 7     | 0x07  | `($#,##0.00_)($#,##0.00)`                           |
+ *   | 8     | 0x08  | `($#,##0.00_)[Red]($#,##0.00)`                      |
+ *   | 9     | 0x09  | `0%`                                                 |
+ *   | 10    | 0x0a  | `0.00%`                                              |
+ *   | 11    | 0x0b  | `0.00E+00`                                           |
+ *   | 12    | 0x0c  | `# ?/?`                                              |
+ *   | 13    | 0x0d  | `# ??/??`                                            |
+ *   | 14    | 0x0e  | `m/d/yy`                                             |
+ *   | 15    | 0x0f  | `d-mmm-yy`                                           |
+ *   | 16    | 0x10  | `d-mmm`                                              |
+ *   | 17    | 0x11  | `mmm-yy`                                             |
+ *   | 18    | 0x12  | `h:mm AM/PM`                                         |
+ *   | 19    | 0x13  | `h:mm:ss AM/PM`                                      |
+ *   | 20    | 0x14  | `h:mm`                                               |
+ *   | 21    | 0x15  | `h:mm:ss`                                            |
+ *   | 22    | 0x16  | `m/d/yy h:mm`                                        |
+ *   | ...   | ...   | ...                                                  |
+ *   | 37    | 0x25  | `(#,##0_)(#,##0)`                                   |
+ *   | 38    | 0x26  | `(#,##0_)[Red](#,##0)`                              |
+ *   | 39    | 0x27  | `(#,##0.00_)(#,##0.00)`                             |
+ *   | 40    | 0x28  | `(#,##0.00_)[Red](#,##0.00)`                        |
+ *   | 41    | 0x29  | `_(* #,##0_)_(* (#,##0)_(* "-"_)_(@_)`            |
+ *   | 42    | 0x2a  | `_($* #,##0_)_($* (#,##0)_($* "-"_)_(@_)`         |
+ *   | 43    | 0x2b  | `_(* #,##0.00_)_(* (#,##0.00)_(* "-"??_)_(@_)`    |
+ *   | 44    | 0x2c  | `_($* #,##0.00_)_($* (#,##0.00)_($* "-"??_)_(@_)` |
+ *   | 45    | 0x2d  | `mm:ss`                                              |
+ *   | 46    | 0x2e  | `[h]:mm:ss`                                          |
+ *   | 47    | 0x2f  | `mm:ss.0`                                            |
+ *   | 48    | 0x30  | `##0.0E+0`                                           |
+ *   | 49    | 0x31  | `@`                                                  |
+ */
+fn C.format_set_num_format_index(format &C.lxw_format, index u8)
+pub fn (f Format)set_number_format_index(index u8) {
+    C.format_set_num_format_index(f.ptr, index)
+}
+
+fn C.format_set_unlocked(format &C.lxw_format)
+pub fn (f Format)set_unlocked() {
+    C.format_set_unlocked(f.ptr)
+}
+
+fn C.format_set_hidden(format &C.lxw_format)
+pub fn (f Format)set_hidden() {
+    C.format_set_hidden(f.ptr)
+}
+
+fn C.format_set_align(format &C.lxw_format, alignment u8)
+pub fn (f Format)set_align(alignment FormatAlignments) {
+    C.format_set_align(f.ptr, u8(alignment))
+}
+
+fn C.format_set_text_wrap(format &C.lxw_format)
+pub fn (f Format)set_text_wrap() {
+    C.format_set_text_wrap(f.ptr)
+}
+
+fn C.format_set_rotation(format &C.lxw_format, angle i16)
+pub fn (f Format)set_rotation(angle i16) {
+    if (angle < -360) || (angle > 360) {
+        return 
+    }
+    C.format_set_rotation(f.ptr, angle)
+}
+
+fn C.format_set_indent(format &C.lxw_format, level u8)
+pub fn (f Format)set_indent(level u8) {
+    C.format_set_indent(f.ptr, level)
+}
+
+fn C.format_set_shrink(format &C.lxw_format)
+pub fn (f Format)set_shrink() {
+    C.format_set_shrink(f.ptr)
+}
+
+fn C.format_set_pattern(format &C.lxw_format, index u8)
+pub fn (f Format)set_pattern(pattern FormatPatterns) {
+    C.format_set_pattern(f.ptr, u8(pattern))
+}
+
+fn C.format_set_bg_color(format &C.lxw_format, color C.lxw_color_t)
+pub fn (f Format)set_background(color DefinedColors) {
+    unsafe {
+        C.format_set_bg_color(f.ptr, C.lxw_color_t(color))
+    }
+}
+
+fn C.format_set_fg_color(format &C.lxw_format, color C.lxw_color_t)
+pub fn (f Format)set_foreground(color DefinedColors) {
+    unsafe {
+        C.format_set_fg_color(f.ptr, C.lxw_color_t(color))
+    }
+}
+
+pub enum BorderLine {
+    all
+    top
+    bottom
+    left
+    right
+}
+
+fn C.format_set_border(format &C.lxw_format, style u8)
+fn C.format_set_top(fmormat &C.lxw_format, style u8)
+fn C.format_set_bottom(format &C.lxw_format, style u8)
+fn C.format_set_left(format &C.lxw_format, style u8)
+fn C.format_set_right(format &C.lxw_format, style u8)
+fn C.format_set_border_color(format &C.lxw_format, color C.lxw_color_t)
+fn C.format_set_top_color(format &C.lxw_format, color C.lxw_color_t)
+fn C.format_set_bottom_color(format &C.lxw_format, color C.lxw_color_t)
+fn C.format_set_left_color(format &C.lxw_format, color C.lxw_color_t)
+fn C.format_set_right_color(format &C.lxw_format, color C.lxw_color_t)
+
+pub fn (f Format)set_border(border BorderLine, style FormatBorders, color DefinedColors) {
+    match border {
+        .all {
+            unsafe {
+                C.format_set_border(f.ptr, u8(style))
+                C.format_set_border_color(f.ptr, C.lxw_color_t(color))
+            }
+        }
+        .top {
+            unsafe {
+                C.format_set_top(f.ptr, u8(style))
+                C.format_set_top_color(f.ptr, C.lxw_color_t(color))
+            }
+        }
+        .bottom {
+            unsafe {
+                C.format_set_bottom(f.ptr, u8(style))
+                C.format_set_bottom_color(f.ptr, C.lxw_color_t(color))
+            }
+        }
+        .left {
+            unsafe {
+                C.format_set_left(f.ptr, u8(style))
+                C.format_set_left_color(f.ptr, C.lxw_color_t(color))
+            }
+        }
+        .right {
+            unsafe {
+                C.format_set_right(f.ptr, u8(style))
+                C.format_set_right_color(f.ptr, C.lxw_color_t(color))
+            }
+        }
+    }
+}
+
+fn C.format_set_diag_type(format &C.lxw_format, dt u8)
+pub fn (f Format)set_diagonal_type(diag_type FormatDiagonalTypes) {
+    unsafe {
+        C.format_set_diag_type(f.ptr, u8(diag_type))
+    }
+}
+
+fn C.format_set_diag_border(format &C.lxw_format, style u8)
+fn C.format_set_diag_color(format &C.lxw_format, color &C.lxw_color_t)
+pub fn (f Format)set_diagonal_style(border FormatBorders, color DefinedColors) {
+    unsafe {
+        C.format_set_diag_border(f.ptr, u8(border))
+        C.format_set_diag_color(f.ptr, C.lxw_color_t(color))
+    }
+}
+
+fn C.format_set_quote_prefix(format &C.lxw_format)
+pub fn (f Format)set_quote_prefix() {
+    C.format_set_quote_prefix(f.ptr)
+}
+
+fn C.format_set_font_outline(format &C.lxw_format)
+pub fn (f Format)set_font_outline() {
+    C.format_set_font_outline(f.ptr)
+}
+
+fn C.format_set_font_shadow(format &C.lxw_format)
+pub fn (f Format)set_font_shadow() {
+    C.format_set_font_shadow(f.ptr)
+}
+
+fn C.format_set_font_family(format &C.lxw_format, value u8)
+pub fn (f Format)set_font_family(value u8) {
+    C.format_set_font_family(f.ptr, value)
+}
+
+fn C.format_set_font_charset(format &C.lxw_format, value u8)
+pub fn (f Format)set_font_charset(value u8) {
+    C.format_set_font_charset(f.ptr, value)
+}
+
+fn C.format_set_font_scheme(format &C.lxw_format, font_scheme &char)
+pub fn (f Format)set_font_scheme(font_scheme string) {
+    C.format_set_font_scheme(f.ptr, &char(font_scheme.str))
+}
+
+fn C.format_set_font_condense(format &C.lxw_format)
+pub fn (f Format)set_font_condense() {
+    C.format_set_font_condense(f.ptr)
+}
+
+fn C.format_set_font_extend(format &C.lxw_format)
+pub fn (f Format)set_font_extend() {
+    C.format_set_font_extend(f.ptr)
+}
+
+fn C.format_set_reading_order(format &C.lxw_format, value u8)
+pub fn (f Format)set_reading_order(value u8) {
+    C.format_set_reading_order(f.ptr, value)
+}
+
+fn C.format_set_theme(format &C.lxw_format, value u8)
+pub fn (f Format)set_theme(theme_index u8) {
+    C.format_set_theme(f.ptr, theme_index)
+}
+
+fn C.format_set_hyperlink(format &C.lxw_format)
+pub fn (f Format)set_hyperlink() {
+    C.format_set_hyperlink(f.ptr)
+}
+
+fn C.format_set_color_indexed(format &C.lxw_format, value u8)
+pub fn (f Format)set_color_indexed(index u8) {
+    C.format_set_color_indexed(f.ptr, index)
+}
+
+fn C.format_set_font_only(format &C.lxw_format)
+pub fn (f Format)set_font_only() {
+    C.format_set_font_only(f.ptr)
+}
+
 pub enum FormatUnderlines as u32 {
     @none = C.LXW_UNDERLINE_NONE
     single = C.LXW_UNDERLINE_SINGLE
