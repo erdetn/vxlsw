@@ -56,6 +56,263 @@ pub fn (ws Worksheet)write_string(row u32, col u16, text string, format Format) 
     }
 }
 
+pub enum Gridlines { // lxw_gridlines
+    hide_all_gridlines = C.LXW_HIDE_ALL_GRIDLINES
+    show_screen_gridlines = C.LXW_SHOW_SCREEN_GRIDLINES
+    show_print_gridlines = C.LXW_SHOW_PRINT_GRIDLINES
+    show_all_gridlines = C.LXW_SHOW_ALL_GRIDLINES
+}
+
+pub enum ValidationBoolean { // lxw_validation_boolean
+    default = C.LXW_VALIDATION_DEFAULT
+    off = C.LXW_VALIDATION_OFF
+    on = C.LXW_VALIDATION_ON
+}
+
+pub enum ValidationTypes { // lxw_validation_types
+    @none = C.LXW_VALIDATION_TYPE_NONE
+    integer = C.LXW_VALIDATION_TYPE_INTEGER
+    integer_formula = C.LXW_VALIDATION_TYPE_INTEGER_FORMULA
+    decimal = C.LXW_VALIDATION_TYPE_DECIMAL
+    decimal_formula = C.LXW_VALIDATION_TYPE_DECIMAL_FORMULA
+    list = C.LXW_VALIDATION_TYPE_LIST
+    formula = C.LXW_VALIDATION_TYPE_LIST_FORMULA
+    date = C.LXW_VALIDATION_TYPE_DATE
+    date_formula = C.LXW_VALIDATION_TYPE_DATE_FORMULA
+    date_number = C.LXW_VALIDATION_TYPE_DATE_NUMBER
+    time = C.LXW_VALIDATION_TYPE_TIME
+    time_formula = C.LXW_VALIDATION_TYPE_TIME_FORMULA
+    time_number = C.LXW_VALIDATION_TYPE_TIME_NUMBER
+    type_length = C.LXW_VALIDATION_TYPE_LENGTH
+    length_formula = C.LXW_VALIDATION_TYPE_LENGTH_FORMULA
+    type_custom_formula = C.LXW_VALIDATION_TYPE_CUSTOM_FORMULA
+    type_any = C.LXW_VALIDATION_TYPE_ANY
+}
+
+pub enum ValidationCriteria { // lxw_validation_criteria 
+    @none = C.LXW_VALIDATION_CRITERIA_NONE
+    between = C.LXW_VALIDATION_CRITERIA_BETWEEN
+    not_between = C.LXW_VALIDATION_CRITERIA_NOT_BETWEEN
+    equal_to = C.LXW_VALIDATION_CRITERIA_EQUAL_TO
+    not_equal_to = C.LXW_VALIDATION_CRITERIA_NOT_EQUAL_TO
+    greater_than = C.LXW_VALIDATION_CRITERIA_GREATER_THAN
+    less_than = C.LXW_VALIDATION_CRITERIA_LESS_THAN
+    greater_than_or_equal_to = C.LXW_VALIDATION_CRITERIA_GREATER_THAN_OR_EQUAL_TO
+    less_than_or_equal_to = C.LXW_VALIDATION_CRITERIA_LESS_THAN_OR_EQUAL_TO
+}
+
+pub enum ValidationErrorTypes { // lxw_validation_error_types 
+    stop = C.LXW_VALIDATION_ERROR_TYPE_STOP
+    warning = C.LXW_VALIDATION_ERROR_TYPE_WARNING
+    information = C.LXW_VALIDATION_ERROR_TYPE_INFORMATION
+}
+
+pub enum CommentDisplayTypes { // lxw_comment_display_types 
+    default = C.LXW_COMMENT_DISPLAY_DEFAULT
+    hidden = C.LXW_COMMENT_DISPLAY_HIDDEN
+    visible = C.LXW_COMMENT_DISPLAY_VISIBLE
+}
+
+pub enum ConditionalFormatTypes { // lxw_conditional_format_types 
+    @none = C.LXW_CONDITIONAL_TYPE_NONE
+    cell = C.LXW_CONDITIONAL_TYPE_CELL
+    text = C.LXW_CONDITIONAL_TYPE_TEXT
+    time_period = C.LXW_CONDITIONAL_TYPE_TIME_PERIOD
+    average = C.LXW_CONDITIONAL_TYPE_AVERAGE
+    duplicate = C.LXW_CONDITIONAL_TYPE_DUPLICATE
+    unique = C.LXW_CONDITIONAL_TYPE_UNIQUE
+    top = C.LXW_CONDITIONAL_TYPE_TOP
+    bottom = C.LXW_CONDITIONAL_TYPE_BOTTOM
+    blanks = C.LXW_CONDITIONAL_TYPE_BLANKS
+    no_blanks = C.LXW_CONDITIONAL_TYPE_NO_BLANKS
+    errors = C.LXW_CONDITIONAL_TYPE_ERRORS
+    no_errors = C.LXW_CONDITIONAL_TYPE_NO_ERRORS
+    type_formula = C.LXW_CONDITIONAL_TYPE_FORMULA
+    color_scale_2 = C.LXW_CONDITIONAL_2_COLOR_SCALE
+    color_scale_3 = C.LXW_CONDITIONAL_3_COLOR_SCALE
+    data_bar = C.LXW_CONDITIONAL_DATA_BAR
+    icon_sets = C.LXW_CONDITIONAL_TYPE_ICON_SETS
+    type_last = C.LXW_CONDITIONAL_TYPE_LAST
+}
+
+pub enum ConditionalCriteria { // lxw_conditional_criteria 
+    @none = C.LXW_CONDITIONAL_CRITERIA_NONE
+    equal_to = C.LXW_CONDITIONAL_CRITERIA_EQUAL_TO
+    not_equal_to = C.LXW_CONDITIONAL_CRITERIA_NOT_EQUAL_TO
+    greater_than = C.LXW_CONDITIONAL_CRITERIA_GREATER_THAN
+    less_than = C.LXW_CONDITIONAL_CRITERIA_LESS_THAN
+    greater_than_or_equal_to = C.LXW_CONDITIONAL_CRITERIA_GREATER_THAN_OR_EQUAL_TO
+    less_than_or_equal_to = C.LXW_CONDITIONAL_CRITERIA_LESS_THAN_OR_EQUAL_TO
+    between = C.LXW_CONDITIONAL_CRITERIA_BETWEEN
+    not_between = C.LXW_CONDITIONAL_CRITERIA_NOT_BETWEEN
+    text_containing = C.LXW_CONDITIONAL_CRITERIA_TEXT_CONTAINING
+    text_not_containig = C.LXW_CONDITIONAL_CRITERIA_TEXT_NOT_CONTAINING
+    text_begins_with = C.LXW_CONDITIONAL_CRITERIA_TEXT_BEGINS_WITH
+    text_ends_with = C.LXW_CONDITIONAL_CRITERIA_TEXT_ENDS_WITH
+    time_period_yesterday = C.LXW_CONDITIONAL_CRITERIA_TIME_PERIOD_YESTERDAY
+    time_period_today = C.LXW_CONDITIONAL_CRITERIA_TIME_PERIOD_TODAY
+    time_period_tomorrow = C.LXW_CONDITIONAL_CRITERIA_TIME_PERIOD_TOMORROW
+    time_period_last_7_days = C.LXW_CONDITIONAL_CRITERIA_TIME_PERIOD_LAST_7_DAYS
+    time_period_last_week = C.LXW_CONDITIONAL_CRITERIA_TIME_PERIOD_LAST_WEEK
+    time_period_this_week = C.LXW_CONDITIONAL_CRITERIA_TIME_PERIOD_THIS_WEEK
+    time_period_next_week = C.LXW_CONDITIONAL_CRITERIA_TIME_PERIOD_NEXT_WEEK
+    time_period_last_month = C.LXW_CONDITIONAL_CRITERIA_TIME_PERIOD_LAST_MONTH
+    time_period_this_month = C.LXW_CONDITIONAL_CRITERIA_TIME_PERIOD_THIS_MONTH
+    time_period_next_month = C.LXW_CONDITIONAL_CRITERIA_TIME_PERIOD_NEXT_MONTH
+    average_above = C.LXW_CONDITIONAL_CRITERIA_AVERAGE_ABOVE
+    average_below = C.LXW_CONDITIONAL_CRITERIA_AVERAGE_BELOW
+    average_above_or_equal = C.LXW_CONDITIONAL_CRITERIA_AVERAGE_ABOVE_OR_EQUAL
+    average_below_or_equal = C.LXW_CONDITIONAL_CRITERIA_AVERAGE_BELOW_OR_EQUAL
+    average_1std_dev_above = C.LXW_CONDITIONAL_CRITERIA_AVERAGE_1_STD_DEV_ABOVE
+    average_1std_dev_below = C.LXW_CONDITIONAL_CRITERIA_AVERAGE_1_STD_DEV_BELOW
+    average_2std_dev_above = C.LXW_CONDITIONAL_CRITERIA_AVERAGE_2_STD_DEV_ABOVE
+    average_2std_dev_below = C.LXW_CONDITIONAL_CRITERIA_AVERAGE_2_STD_DEV_BELOW
+    average_3std_dev_above = C.LXW_CONDITIONAL_CRITERIA_AVERAGE_3_STD_DEV_ABOVE
+    average_3std_dev_below = C.LXW_CONDITIONAL_CRITERIA_AVERAGE_3_STD_DEV_BELOW
+    top_or_bottom_percent = C.LXW_CONDITIONAL_CRITERIA_TOP_OR_BOTTOM_PERCENT
+}
+
+pub enum ConditionalFormat_rule_types { // lxw_conditional_format_rule_types
+    @none = C.LXW_CONDITIONAL_RULE_TYPE_NONE
+    minimum = C.LXW_CONDITIONAL_RULE_TYPE_MINIMUM
+    number = C.LXW_CONDITIONAL_RULE_TYPE_NUMBER
+    percent = C.LXW_CONDITIONAL_RULE_TYPE_PERCENT
+    percentile = C.LXW_CONDITIONAL_RULE_TYPE_PERCENTILE
+    formula = C.LXW_CONDITIONAL_RULE_TYPE_FORMULA
+    maximum = C.LXW_CONDITIONAL_RULE_TYPE_MAXIMUM
+    auto_min = C.LXW_CONDITIONAL_RULE_TYPE_AUTO_MIN
+    auto_max = C.LXW_CONDITIONAL_RULE_TYPE_AUTO_MAX
+}
+
+pub enum ConditionalFormatBarDirection { // lxw_conditional_format_bar_direction
+    context = C.LXW_CONDITIONAL_BAR_DIRECTION_CONTEXT
+    right_to_left = C.LXW_CONDITIONAL_BAR_DIRECTION_RIGHT_TO_LEFT
+    left_to_right = C.LXW_CONDITIONAL_BAR_DIRECTION_LEFT_TO_RIGHT
+}
+
+pub enum ConditionaBarAxisPosition { // lxw_conditional_bar_axis_position 
+    automatic = C.LXW_CONDITIONAL_BAR_AXIS_AUTOMATIC
+    midpoint = C.LXW_CONDITIONAL_BAR_AXIS_MIDPOINT
+    @none = C.LXW_CONDITIONAL_BAR_AXIS_NONE
+}
+
+pub enum ConditionalIconTypes { // lxw_conditional_icon_types 
+    type_3_arrows_colored = C.LXW_CONDITIONAL_ICONS_3_ARROWS_COLORED
+    type_3_arrows_gray = C.LXW_CONDITIONAL_ICONS_3_ARROWS_GRAY
+    type_3_flags = C.LXW_CONDITIONAL_ICONS_3_FLAGS
+    type_3_traffic_lights_unrimmed = C.LXW_CONDITIONAL_ICONS_3_TRAFFIC_LIGHTS_UNRIMMED
+    type_3_traffic_lights_rimmed = C.LXW_CONDITIONAL_ICONS_3_TRAFFIC_LIGHTS_RIMMED
+    type_3_signs = C.LXW_CONDITIONAL_ICONS_3_SIGNS
+    type_3_symbol_circled = C.LXW_CONDITIONAL_ICONS_3_SYMBOLS_CIRCLED
+    type_3_symbols_uncircled = C.LXW_CONDITIONAL_ICONS_3_SYMBOLS_UNCIRCLED
+    type_4_arrows_colored = C.LXW_CONDITIONAL_ICONS_4_ARROWS_COLORED
+    type_4_arrows_gray = C.LXW_CONDITIONAL_ICONS_4_ARROWS_GRAY
+    type_4_red_to_black = C.LXW_CONDITIONAL_ICONS_4_RED_TO_BLACK
+    type_4_rtings = C.LXW_CONDITIONAL_ICONS_4_RATINGS
+    type_4_traffic_lights = C.LXW_CONDITIONAL_ICONS_4_TRAFFIC_LIGHTS
+    type_5_arrows_colored = C.LXW_CONDITIONAL_ICONS_5_ARROWS_COLORED
+    type_5_arrows_gray = C.LXW_CONDITIONAL_ICONS_5_ARROWS_GRAY
+    type_5_ratings = C.LXW_CONDITIONAL_ICONS_5_RATINGS
+    type_5_quarters = C.LXW_CONDITIONAL_ICONS_5_QUARTERS
+}
+
+pub enum TableStyleType { // lxw_table_style_type 
+    default = C.LXW_TABLE_STYLE_TYPE_DEFAULT
+    light = C.LXW_TABLE_STYLE_TYPE_LIGHT
+    medium = C.LXW_TABLE_STYLE_TYPE_MEDIUM
+    dark = C.LXW_TABLE_STYLE_TYPE_DARK
+}
+
+pub enum TableTotalFunctions { // lxw_table_total_functions 
+    @none = C.LXW_TABLE_FUNCTION_NONE
+    average = C.LXW_TABLE_FUNCTION_AVERAGE 
+    count_nums = C.LXW_TABLE_FUNCTION_COUNT_NUMS 
+    count = C.LXW_TABLE_FUNCTION_COUNT 
+    max = C.LXW_TABLE_FUNCTION_MAX 
+    min = C.LXW_TABLE_FUNCTION_MIN 
+    std_dev = C.LXW_TABLE_FUNCTION_STD_DEV 
+    sum = C.LXW_TABLE_FUNCTION_SUM 
+    var = C.LXW_TABLE_FUNCTION_VAR 
+}
+
+pub enum FilterCriteria { // lxw_filter_criteria 
+    @none = C.LXW_FILTER_CRITERIA_NONE
+    equal_to = C.LXW_FILTER_CRITERIA_EQUAL_TO
+    not_equal_to = C.LXW_FILTER_CRITERIA_NOT_EQUAL_TO
+    greater_than = C.LXW_FILTER_CRITERIA_GREATER_THAN 
+    less_than = C.LXW_FILTER_CRITERIA_LESS_THAN 
+    greater_than_or_equal_to = C.LXW_FILTER_CRITERIA_GREATER_THAN_OR_EQUAL_TO
+    less_than_or_equal_to = C.LXW_FILTER_CRITERIA_LESS_THAN_OR_EQUAL_TO
+    blanks = C.LXW_FILTER_CRITERIA_BLANKS
+    non_blanks = C.LXW_FILTER_CRITERIA_NON_BLANKS
+}
+
+pub enum FilterOperator { // lxw_filter_operator
+    and = C.LXW_FILTER_AND
+    @or = C.LXW_FILTER_OR
+}
+
+pub enum FilterTypes { // lxw_filter_type 
+    type_none = C.LXW_FILTER_TYPE_NONE
+    type_single = C.LXW_FILTER_TYPE_SINGLE
+    type_and = C.LXW_FILTER_TYPE_AND
+    type_or = C.LXW_FILTER_TYPE_OR
+    type_string_list = C.LXW_FILTER_TYPE_STRING_LIST
+}
+
+pub enum ObjectPosition { // lxw_object_position
+    default = C.LXW_OBJECT_POSITION_DEFAULT
+    move_and_size = C.LXW_OBJECT_MOVE_AND_SIZE
+    move_dont_size = C.LXW_OBJECT_MOVE_DONT_SIZE
+    dont_move_dont_size = C.LXW_OBJECT_DONT_MOVE_DONT_SIZE
+    move_and_size_after = C.LXW_OBJECT_MOVE_AND_SIZE_AFTER
+}
+
+pub enum IgnoreErrors { // lxw_ignore_errors
+    number_stored_as_text = C.LXW_IGNORE_NUMBER_STORED_AS_TEXT
+    eval_error = C.LXW_IGNORE_EVAL_ERROR
+    formula_differs = C.LXW_IGNORE_FORMULA_DIFFERS
+    formula_range = C.LXW_IGNORE_FORMULA_RANGE
+    formula_unlocked = C.LXW_IGNORE_FORMULA_UNLOCKED
+    empty_cell_reference = C.LXW_IGNORE_EMPTY_CELL_REFERENCE
+    list_data_validation = C.LXW_IGNORE_LIST_DATA_VALIDATION
+    calculated_column = C.LXW_IGNORE_CALCULATED_COLUMN
+    two_digit_text_year = C.LXW_IGNORE_TWO_DIGIT_TEXT_YEAR
+    last_option = C.LXW_IGNORE_LAST_OPTION
+}
+
+pub enum CellTypes { // cell_types
+    number_cell = C.NUMBER_CELL
+    string_cell = C.STRING_CELL
+    inline_string_cell = C.INLINE_STRING_CELL
+    inline_rich_string_cell = C.INLINE_RICH_STRING_CELL
+    formula_cell = C.FORMULA_CELL
+    array_formula_cell = C.ARRAY_FORMULA_CELL
+    dynamic_array_formula_cell = C.DYNAMIC_ARRAY_FORMULA_CELL
+    blank_cell = C.BLANK_CELL
+    boolean_cell = C.BOOLEAN_CELL
+    comment = C.COMMENT
+    hyperlink_url = C.HYPERLINK_URL
+    hyperlink_interlal = C.HYPERLINK_INTERNAL
+    hyperlink_external = C.HYPERLINK_EXTERNAL
+}
+
+pub enum PaneTypes { // pane_types
+    no_panes = C.NO_PANES
+    freeze_panes = C.FREEZE_PANES
+    split_panes = C.SPLIT_PANES
+    freeze_split_panes = C.FREEZE_SPLIT_PANES
+}
+
+pub enum ImagePosition { // lxw_image_position
+    header_left = C.HEADER_LEFT
+    header_center = C.HEADER_CENTER
+    header_right = C.HEADER_RIGHT
+    footer_left = C.FOOTER_LEFT
+    footer_center = C.FOOTER_CENTER
+    footer_right = C.FOOTER_RIGHT
+}
+
 // ChartSheet 
 struct C.lxw_chartsheet {
 }
