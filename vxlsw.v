@@ -9,7 +9,7 @@ module vxlsw
 #include <xlsxwriter.h>
 
 
-//// Workbook ////
+// Workbook 
 struct C.lxw_workbook {
 }
 
@@ -41,7 +41,7 @@ pub fn (wb Workbook)close() ReturnCode {
     }
 }
 
-//// Worksheet ////
+// Worksheet 
 struct C.lxw_worksheet {
 }
 
@@ -49,7 +49,6 @@ pub struct Worksheet {
     ptr &C.lxw_worksheet
 }
 
-// TODO: need to fix error return type
 fn C.worksheet_write_string(sheet &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, text &char, format &C.lxw_format) int
 pub fn (ws Worksheet)write_string(row u32, col u16, text string, format Format) ReturnCode {
     return unsafe {
@@ -57,7 +56,7 @@ pub fn (ws Worksheet)write_string(row u32, col u16, text string, format Format) 
     }
 }
 
-// ChartSheet //
+// ChartSheet 
 struct C.lxw_chartsheet {
 }
 pub struct ChartSheet {
@@ -72,7 +71,7 @@ pub fn (wb Workbook)add_chartsheet(sheet_name string) ChartSheet {
 }
 
 
-// Chart // 
+// Chart
 pub enum ChartType as u8 {
     area = C.LXW_CHART_AREA
     area_stacked = C.LXW_CHART_AREA_STACKED
@@ -112,7 +111,7 @@ pub fn (wb Workbook)add_chart(chart_type ChartType) Chart {
     }}
 }
 
-// DocProperties //
+// DocProperties
 struct C.lxw_doc_properties {
     title &char 
     subject &char 
@@ -202,7 +201,7 @@ pub fn (wb Workbook)deallocate() {
     C.lxw_workbook_free(wb.ptr)
 }
 
-// Format //
+// Format
 struct C.lxw_format {
 }
 
@@ -277,47 +276,45 @@ pub fn (f Format)set_number_format(number_format string) {
     C.format_set_num_format(f.ptr, &char(number_format.str))
 }
 
-/* 
- *   | Index | Index | Format String                                        |
- *   | ----- | ----- | ---------------------------------------------------- |
- *   | 0     | 0x00  | `General`                                            |
- *   | 1     | 0x01  | `0`                                                  |
- *   | 2     | 0x02  | `0.00`                                               |
- *   | 3     | 0x03  | `#,##0`                                              |
- *   | 4     | 0x04  | `#,##0.00`                                           |
- *   | 5     | 0x05  | `($#,##0_)($#,##0)`                                  |
- *   | 6     | 0x06  | `($#,##0_)[Red]($#,##0)`                             |
- *   | 7     | 0x07  | `($#,##0.00_)($#,##0.00)`                            |
- *   | 8     | 0x08  | `($#,##0.00_)[Red]($#,##0.00)`                       |
- *   | 9     | 0x09  | `0%`                                                 |
- *   | 10    | 0x0a  | `0.00%`                                              |
- *   | 11    | 0x0b  | `0.00E+00`                                           |
- *   | 12    | 0x0c  | `# ?/?`                                              |
- *   | 13    | 0x0d  | `# ??/??`                                            |
- *   | 14    | 0x0e  | `m/d/yy`                                             |
- *   | 15    | 0x0f  | `d-mmm-yy`                                           |
- *   | 16    | 0x10  | `d-mmm`                                              |
- *   | 17    | 0x11  | `mmm-yy`                                             |
- *   | 18    | 0x12  | `h:mm AM/PM`                                         |
- *   | 19    | 0x13  | `h:mm:ss AM/PM`                                      |
- *   | 20    | 0x14  | `h:mm`                                               |
- *   | 21    | 0x15  | `h:mm:ss`                                            |
- *   | 22    | 0x16  | `m/d/yy h:mm`                                        |
- *   | ...   | ...   | ...                                                  |
- *   | 37    | 0x25  | `(#,##0_)(#,##0)`                                    |
- *   | 38    | 0x26  | `(#,##0_)[Red](#,##0)`                               |
- *   | 39    | 0x27  | `(#,##0.00_)(#,##0.00)`                              |
- *   | 40    | 0x28  | `(#,##0.00_)[Red](#,##0.00)`                         |
- *   | 41    | 0x29  | `_(* #,##0_)_(* (#,##0)_(* "-"_)_(@_)`               |
- *   | 42    | 0x2a  | `_($* #,##0_)_($* (#,##0)_($* "-"_)_(@_)`            |
- *   | 43    | 0x2b  | `_(* #,##0.00_)_(* (#,##0.00)_(* "-"??_)_(@_)`       |
- *   | 44    | 0x2c  | `_($* #,##0.00_)_($* (#,##0.00)_($* "-"??_)_(@_)`    |
- *   | 45    | 0x2d  | `mm:ss`                                              |
- *   | 46    | 0x2e  | `[h]:mm:ss`                                          |
- *   | 47    | 0x2f  | `mm:ss.0`                                            |
- *   | 48    | 0x30  | `##0.0E+0`                                           |
- *   | 49    | 0x31  | `@`                                                  |
- *   */
+//| Index | Index | Format String                                        |
+//| ----- | ----- | ---------------------------------------------------- |
+//| 0     | 0x00  | `General`                                            |
+//| 1     | 0x01  | `0`                                                  |
+//| 2     | 0x02  | `0.00`                                               |
+//| 3     | 0x03  | `#,##0`                                              |
+//| 4     | 0x04  | `#,##0.00`                                           |
+//| 5     | 0x05  | `($#,##0_)($#,##0)`                                  |
+//| 6     | 0x06  | `($#,##0_)[Red]($#,##0)`                             |
+//| 7     | 0x07  | `($#,##0.00_)($#,##0.00)`                            |
+//| 8     | 0x08  | `($#,##0.00_)[Red]($#,##0.00)`                       |
+//| 9     | 0x09  | `0%`                                                 |
+//| 10    | 0x0a  | `0.00%`                                              |
+//| 11    | 0x0b  | `0.00E+00`                                           |
+//| 12    | 0x0c  | `# ?/?`                                              |
+//| 13    | 0x0d  | `# ??/??`                                            |
+//| 14    | 0x0e  | `m/d/yy`                                             |
+//| 15    | 0x0f  | `d-mmm-yy`                                           |
+//| 16    | 0x10  | `d-mmm`                                              |
+//| 17    | 0x11  | `mmm-yy`                                             |
+//| 18    | 0x12  | `h:mm AM/PM`                                         |
+//| 19    | 0x13  | `h:mm:ss AM/PM`                                      |
+//| 20    | 0x14  | `h:mm`                                               |
+//| 21    | 0x15  | `h:mm:ss`                                            |
+//| 22    | 0x16  | `m/d/yy h:mm`                                        |
+//| ...   | ...   | ...                                                  |
+//| 37    | 0x25  | `(#,##0_)(#,##0)`                                    |
+//| 38    | 0x26  | `(#,##0_)[Red](#,##0)`                               |
+//| 39    | 0x27  | `(#,##0.00_)(#,##0.00)`                              |
+//| 40    | 0x28  | `(#,##0.00_)[Red](#,##0.00)`                         |
+//| 41    | 0x29  | `_(* #,##0_)_(* (#,##0)_(* "-"_)_(@_)`               |
+//| 42    | 0x2a  | `_($* #,##0_)_($* (#,##0)_($* "-"_)_(@_)`            |
+//| 43    | 0x2b  | `_(* #,##0.00_)_(* (#,##0.00)_(* "-"??_)_(@_)`       |
+//| 44    | 0x2c  | `_($* #,##0.00_)_($* (#,##0.00)_($* "-"??_)_(@_)`    |
+//| 45    | 0x2d  | `mm:ss`                                              |
+//| 46    | 0x2e  | `[h]:mm:ss`                                          |
+//| 47    | 0x2f  | `mm:ss.0`                                            |
+//| 48    | 0x30  | `##0.0E+0`                                           |
+//| 49    | 0x31  | `@`                                                  |
 
 fn C.format_set_num_format_index(format &C.lxw_format, index u8)
 pub fn (f Format)set_number_format_index(index u8) {
@@ -591,7 +588,6 @@ pub enum FormatBorders as u32 {
 }
 
 // lxw_color_t = u32
-
 // DefinedColors
 pub enum DefinedColors as u32 {
     black = C.LXW_COLOR_BLACK
@@ -612,7 +608,7 @@ pub enum DefinedColors as u32 {
     yellow = C.LXW_COLOR_YELLOW
 }
 
-/// Error ///
+// Error 
 pub enum ReturnCode as int {
     no_error = C.LXW_NO_ERROR
     memeory_malloc_failed = C.LXW_ERROR_MEMORY_MALLOC_FAILED
@@ -661,5 +657,23 @@ pub fn version() string {
         cstring_to_vstring(C.lxw_version())
     }
 }
+
+// DateTime
+struct C.lxw_datetime {
+    /** Year     : 1900 - 9999 */
+    year int
+    /** Month    : 1 - 12 */
+    month int
+    /** Day      : 1 - 31 */
+    day int
+    /** Hour     : 0 - 23 */
+    hour int
+    /** Minute   : 0 - 59 */
+    min int
+    /** Seconds  : 0 - 59.999 */
+    sec f64 
+}
+
+pub type DateTime = C.lxw_datetime
 
 
