@@ -2,12 +2,11 @@
 
 module vxlsw
 
-#flag -I /usr/local/include 
-#flag -L /usr/local/lib 
+#flag -I /usr/local/include/ 
+#flag -L /usr/local/lib/
 #flag -l xlsxwriter
 
 #include <xlsxwriter.h>
-
 
 // Workbook 
 struct C.lxw_workbook {
