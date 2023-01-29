@@ -52,9 +52,79 @@ pub struct Worksheet {
 fn C.worksheet_write_string(sheet &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, text &char, format &C.lxw_format) int
 pub fn (ws Worksheet)write_string(row u32, col u16, text string, format Format) ReturnCode {
     return unsafe {
-        ReturnCode(C.worksheet_write_string(ws.ptr, C.lxw_row_t(row), C.lxw_col_t(col), text.str, format.ptr))
+        ReturnCode(C.worksheet_write_string(ws.ptr, C.lxw_row_t(row), C.lxw_col_t(col), &char(text.str), format.ptr))
     }
 }
+
+fn C.worksheet_write_number(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, number f64, format &C.lxw_format) C.lxw_error
+fn C.worksheet_write_string(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, text &char, format &C.lxw_format) C.lxw_error 
+fn C.worksheet_write_formula(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, formula &char, format &C.lxw_format) C.lxw_error 
+fn C.worksheet_write_array_formula(ws &C.lxw_worksheet, first_row C.lxw_row_t, first_col C.lxw_col_t, last_row C.lxw_row_t, last_col C.lxw_col_t, formula &char, format &C.lxw_format) C.lxw_error 
+fn C.worksheet_write_dynamic_array_formula(ws &C.lxw_worksheet, first_row C.lxw_row_t, first_col C.lxw_col_t, last_row C.lxw_row_t, last_col C.lxw_col_t, formula &char, format &C.lxw_format) C.lxw_error 
+fn C.worksheet_write_dynamic_formula(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, formula &char, format &C.lxw_format) C.lxw_error
+fn C.worksheet_write_array_formula_num(ws &C.lxw_worksheet, first_row C.lxw_row_t, first_col C.lxw_col_t, last_row C.lxw_row_t, last_col C.lxw_col_t, formula &char, format &C.lxw_format, result f64) C.lxw_error 
+fn C.worksheet_write_dynamic_array_formula_num(ws &C.lxw_worksheet, first_row C.lxw_row_t, first_col C.lxw_col_t, last_row C.lxw_row_t, last_col C.lxw_col_t, formula &char, format &C.lxw_format, result f64) C.lxw_error
+fn C.worksheet_write_dynamic_formula_num(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, formula &char, format &C.lxw_format, resulti f64) C.lxw_error
+fn C.worksheet_write_datetime(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, datetime &C.lxw_datetime, format &C.lxw_format) C.lxw_error
+fn C.worksheet_write_unixtime(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, unixtime i64, format &C.lxw_format) C.lxw_error
+fn C.worksheet_write_url_opt(ws &C.lxw_worksheet, row_num C.lxw_row_t, col_num C.lxw_col_t, url &char, format &C.lxw_format, text &char, tooltip &char) C.lxw_error
+fn C.worksheet_write_boolean(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, value int, format &C.lxw_format)
+fn C.worksheet_write_blank(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, format &C.lxw_format) C.lxw_error 
+fn C.worksheet_write_formula_num(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, formula &char, format &C.lxw_format, result f64) C.lxw_error 
+fn C.worksheet_write_formula_str(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, formula &char, format &C.lxw_format, result &char) C.lxw_error 
+fn C.worksheet_write_rich_string(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, rich_string &&char, format &C.lxw_format) C.lxw_error
+fn C.worksheet_set_column_pixels_opt(ws &C.lxw_worksheet, first_col C.lxw_col_t, last_col C.lxw_col_t, pixels u32, formats &C.lxw_format, options &C.lxw_row_col_options) C.lxw_error
+fn C.worksheet_insert_image(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, filename &char) C.lxw_error 
+fn C.worksheet_insert_image_opt(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, filename &char, options &C.lxw_image_options) C.lxw_error 
+fn C.worksheet_insert_image_buffer(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, image_buffer &u8, image_size C.size_t) C.lxw_error 
+fn C.worksheet_insert_image_buffer_opt(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, image_buffer &u8, image_size C.size_t, options &C.lxw_image_options) C.lxw_error 
+fn C.worksheet_set_background(ws &C.lxw_worksheet, filename &char) C.lxw_error 
+fn C.worksheet_set_background_buffer(ws &C.lxw_worksheet, buffer_image &u8, image_size C.size_t) C.lxw_error 
+fn C.worksheet_insert_chart(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, chart &C.lxw_chart) C.lxw_error 
+fn C.worksheet_insert_chart_opt(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, chart &C.lxw_chart, user_options &C.lxw_chart_options) C.lxw_error 
+fn C.worksheet_merge_range(ws &C.lxw_worksheet, lxw_row_t first_row, first_col C.lxw_col_t, last_row C.lxw_row_t, last_col C.lxw_col_t, text &char, fomrat &C.lxw_format) C.lxw_error 
+fn C.worksheet_autofilter(ws &C.lxw_worksheet, lxw_row_t first_row, lxw_col_t first_col, lxw_row_t last_row, lxw_col_t last_col) C.lxw_error 
+fn C.worksheet_filter_column(ws &C.lxw_worksheet, col C.lxw_col_t, rule &C.lxw_filter_rule) C.lxw_error 
+fn C.worksheet_set_selection(ws &C.lxw_worksheet, first_row C.lxw_row_t, first_col C.lxw_col_t, last_row C.lxw_row_t, last_col C.lxw_col_t)
+fn C.worksheet_set_top_left_cell(ws &C.lxw_worksheet, row C.lxw_row_t, col &C.lxw_col_t)
+fn C.worksheet_set_landscape(ws &C.lxw_worksheet)
+fn C.worksheet_set_portrait(ws &C.lxw_worksheet)
+fn C.worksheet_set_page_view(ws &C.lxw_worksheet)
+fn C.worksheet_set_paper(ws &C.lxw_worksheet, paper_type u8)
+fn C.worksheet_set_margins(ws &C.lxw_worksheet, left f64, right f64, top f64, bottom f64)
+fn C.worksheet_set_header(ws &C.lxw_worksheet, text &char) C.lxw_error
+fn C.worksheet_set_footer(ws &C.lxw_worksheet, text &char) C.lxw_error 
+fn C.worksheet_set_header_opt(ws &C.lxw_worksheet, text &char, options &C.lxw_header_footer_options) C.lxw_error 
+fn C.worksheet_set_footer_opt(ws &C.lxw_worksheet, text &char, options &C.lxw_header_footer_options) C.lxw_error
+fn C.worksheet_print_across(ws &C.lxw_worksheet)
+fn C.worksheet_set_zoom(ws &C.lxw_worksheet, scale u16)
+fn C.worksheet_gridlines(ws &C.lxw_worksheet, option u8)
+fn C.worksheet_center_horizontally(ws &C.lxw_worksheet)
+fn C.worksheet_center_vertically(ws &C.lxw_worksheet)
+fn C.worksheet_print_row_col_headers(ws &C.lxw_worksheet)
+
+fn C.worksheet_repeat_rows(ws &C.lxw_worksheet, first_row C.lxw_row_t, last_row C.lxw_row_t) C.lxw_error
+fn C.worksheet_repeat_columns(ws &C.lxw_worksheet, first_col C.lxw_col_t, last_col C.lxw_col_t) C.lxw_error
+fn C.worksheet_print_area(ws &C.lxw_worksheet, first_row C.lxw_row_t, first_col C.lxw_col_t, last_row C.lxw_row_t, last_col C.lxw_col_t) C.lxw_error
+fn C.worksheet_fit_to_pages(ws &C.lxw_worksheet, width u16, height u16)
+fn C.worksheet_set_start_page(ws &C.lxw_worksheet, start_page u16)
+fn C.worksheet_set_print_scale(ws &C.lxw_worksheet, scale u16)
+fn C.worksheet_print_black_and_white(ws &C.lxw_worksheet)
+fn C.worksheet_right_to_left(ws &C.lxw_worksheet)
+fn C.worksheet_hide_zero(ws &C.lxw_worksheet)
+fn C.worksheet_set_tab_color(ws &C.lxw_worksheet, color C.lxw_color_t)
+fn C.worksheet_protect(ws &C.lxw_worksheet, password &char, options &C.lxw_protection)
+fn C.worksheet_outline_settings(ws &C.lxw_worksheet, visible u8, symbols_below u8, symbols_right u8, auto_style u8)
+fn C.worksheet_set_default_row(ws &C.lxw_worksheet, height f64, hide_unused_rows u8)
+fn C.worksheet_show_comments(ws &C.lxw_worksheet)
+fn C.worksheet_set_comments_author(ws &C.lxw_worksheet, author &char)
+fn C.lxw_worksheet_write_sheet_views(ws &C.lxw_worksheet)
+fn C.lxw_worksheet_write_page_margins(ws &C.lxw_worksheet)
+fn C.lxw_worksheet_write_drawings(ws &C.lxw_worksheet)
+fn C.lxw_worksheet_write_sheet_protection(ws &C.lxw_worksheet, protect &C.lxw_protection_obj)
+fn C.lxw_worksheet_write_sheet_pr(ws &C.lxw_worksheet)
+fn C.lxw_worksheet_write_page_setup(ws &C.lxw_worksheet)
+fn C.lxw_worksheet_write_header_footer(ws &C.lxw_worksheet)
 
 pub enum Gridlines { // lxw_gridlines
     hide_all_gridlines = C.LXW_HIDE_ALL_GRIDLINES
@@ -312,6 +382,41 @@ pub enum ImagePosition { // lxw_image_position
     footer_center = C.FOOTER_CENTER
     footer_right = C.FOOTER_RIGHT
 }
+
+struct C.lxw_table_rows {}
+struct C.lxw_row_col_options {}
+struct C.lxw_col_options {}
+struct C.lxw_merged_range {}
+struct C.lxw_repeat_rows {}
+struct C.lxw_repeat_cols {}
+struct C.lxw_print_area {}
+struct C.lxw_autofilter {}
+struct C.lxw_panes {}
+struct C.lxw_selection {}
+struct C.lxw_data_validation {}
+struct C.lxw_data_val_obj {}
+struct C.lxw_conditional_format {}
+struct C.lxw_cond_format_obj {}
+struct C.lxw_cond_format_hash_element {}
+struct C.lxw_table_column {}
+struct C.lxw_table_options {}
+struct C.lxw_table_obj {}
+struct C.lxw_filter_rule {}
+struct C.lxw_filter_rule_obj {}
+struct C.lxw_image_options {}
+struct C.lxw_chart_options {}
+struct C.lxw_object_properties {}
+struct C.lxw_comment_options {}
+struct C.lxw_button_options {}
+struct C.lxw_vml_obj {}
+struct C.lxw_header_footer_options {}
+struct C.lxw_protection {}
+struct C.lxw_protection_obj {}
+struct C.lxw_rich_string_tuple {}
+struct C.lxw_worksheet_init_data {}
+struct C.lxw_row {}
+struct C.lxw_cell {}
+struct C.lxw_drawing_rel_id {}
 
 // ChartSheet 
 struct C.lxw_chartsheet {
