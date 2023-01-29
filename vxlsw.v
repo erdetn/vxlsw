@@ -1,4 +1,4 @@
-// Author: Erdet Nasufi 
+// Copyright (c) 2023 Erdet Nasufi
 
 module vxlsw
 
