@@ -158,6 +158,20 @@ pub fn (ws Worksheet)write_blank(row u32, col u16, format Format) ReturnCode {
     }
 }
 
+fn C.worksheet_set_column(ws &C.lxw_worksheet, first_col C.lxw_col_t, last_col C.lxw_col_t, width f64, format &C.lxw_format) C.lxw_error 
+pub fn (ws Worksheet)set_column(first_col u16, last_col u16, width f64, format Format) ReturnCode {
+    return unsafe {
+        ReturnCode(C.worksheet_set_column(ws.ptr, C.lxw_col_t(first_col), C.lxw_col_t(last_col), width, format.ptr))
+    }
+}
+
+fn C.worksheet_set_row(ws &C.lxw_worksheet, row C.lxw_row_t, height f64, format &C.lxw_format) C.lxw_error 
+pub fn (ws Worksheet)set_row(row u32, height f64, format Format) ReturnCode {
+    return unsafe {
+        ReturnCode(C.worksheet_set_row(ws.ptr, C.lxw_row_t(row), height, format.ptr))
+    }
+}
+
 fn C.worksheet_write_formula_num(ws &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, formula &char, format &C.lxw_format, result f64) C.lxw_error 
 pub fn (ws Worksheet)write_formula_num(row u32, col u16, formula string, result f64, format Format) ReturnCode {
     return unsafe {
@@ -1304,5 +1318,4 @@ struct C.lxw_datetime {
 }
 
 pub type DateTime = C.lxw_datetime
-
 
