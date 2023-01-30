@@ -738,18 +738,115 @@ struct C.lxw_row {}
 struct C.lxw_cell {}
 struct C.lxw_drawing_rel_id {}
 
-// ChartSheet 
+// Chartsheet 
 struct C.lxw_chartsheet {
 }
-pub struct ChartSheet {
+pub struct Chartsheet {
     ptr &C.lxw_chartsheet
 }
 
 fn C.workbook_add_chartsheet(workbook &C.lxw_workbook, sheetname &char) &C.lxw_chartsheet
-pub fn (wb Workbook)add_chartsheet(sheet_name string) ChartSheet {
-    return ChartSheet {
+pub fn (wb Workbook)add_chartsheet(sheet_name string) Chartsheet {
+    return Chartsheet {
         ptr: C.workbook_add_chartsheet(wb.ptr, &char(sheet_name.str))
     }
+}
+
+fn C.workbook_get_chartsheet_by_name(workbook &C.lxw_workbook, name &char) &C.lxw_chartsheet
+pub fn (wb Workbook)get_chartsheet_by_name(name string) Chartsheet {
+    return Chartsheet {
+        ptr: C.workbook_get_chartsheet_by_name(wb.ptr, &char(name.str))
+    }
+}
+
+fn C.chartsheet_set_chart(chartsheet &C.lxw_chartsheet, chart &C.lxw_chart) C.lxw_error
+pub fn (cs Chartsheet)set_chart(chart Chart) ReturnCode {
+    return unsafe {
+        ReturnCode(C.chartsheet_set_chart(cs.ptr, chart.ptr))
+    }
+}
+
+// TODO
+fn C.chartsheet_set_chart_opt(chartsheet &C.lxw_chartsheet, chart &C.lxw_chart, user_options &C.lxw_chart_options) C.lxw_error
+
+fn C.chartsheet_activate(chartsheet &C.lxw_chartsheet)
+pub fn (cs Chartsheet)activate() {
+    C.chartsheet_activate(cs.ptr)
+}
+
+fn C.chartsheet_select(chartsheet &C.lxw_chartsheet)
+pub fn (cs Chartsheet)highlight() {
+    C.chartsheet_select(cs.ptr)
+}
+
+fn C.chartsheet_hide(chartsheet &C.lxw_chartsheet)
+pub fn (cs Chartsheet)hide() {
+    C.chartsheet_hide(cs.ptr)
+}
+
+fn C.chartsheet_set_first_sheet(chartsheet &C.lxw_chartsheet)
+pub fn (cs Chartsheet)set_first_sheet() {
+    C.chartsheet_set_first_sheet(cs.ptr)
+}
+
+fn C.chartsheet_set_tab_color(chartsheet &C.lxw_chartsheet, color C.lxw_color_t)
+pub fn (cs Chartsheet)set_tab_color(color DefinedColors) {
+    unsafe {
+        C.chartsheet_set_tab_color(cs.ptr, C.lxw_color_t(color))
+    }
+}
+
+// TODO 
+fn C.chartsheet_protect(chartsheet &C.lxw_chartsheet, password &char, options &C.lxw_protection)
+
+fn C.chartsheet_set_zoom(chartsheet &C.lxw_chartsheet, scale u16)
+pub fn (cs Chartsheet)set_zoom(scale u16) {
+    C.chartsheet_set_zoom(cs.ptr, scale)
+}
+
+fn C.chartsheet_set_landscape(chartsheet &C.lxw_chartsheet)
+pub fn (cs Chartsheet)set_landscape() {
+    C.chartsheet_set_landscape(cs.ptr)
+}
+
+fn C.chartsheet_set_portrait(chartsheet &C.lxw_chartsheet)
+pub fn (cs Chartsheet)set_portrait() {
+    C.chartsheet_set_portrait(cs.ptr)
+}
+
+fn C.chartsheet_set_paper(chartsheeet &C.lxw_chartsheet, paper_type u8)
+pub fn (cs Chartsheet)set_paper(paper_type u8) {
+    C.chartsheet_set_paper(cs.ptr, paper_type)
+}
+
+fn C.chartsheet_set_margins(chartsheet &C.lxw_chartsheet, left f64, right f64, top f64, bottom f64)
+pub fn (cs Chartsheet)set_margines(left f64, right f64, top f64, bottom f64) {
+    C.chartsheet_set_margins(cs.ptr, left, right, top, bottom)
+}
+
+fn C.chartsheet_set_header(chartsheet &C.lxw_chartsheet, text &char) C.lxw_error 
+pub fn (cs Chartsheet)set_header(text string) ReturnCode {
+    return unsafe {
+        ReturnCode(C.chartsheet_set_header(cs.ptr, &char(text.str)))
+    }
+}
+
+fn C.chartsheet_set_footer(chartsheet &C.lxw_chartsheet, text &char) C.lxw_error 
+pub fn (cs Chartsheet)set_footer(text string) ReturnCode {
+    return unsafe {
+        ReturnCode(C.chartsheet_set_footer(cs.ptr, &char(text.str)))
+    }
+}
+
+// TODO 
+fn C.chartsheet_set_header_opt(chartsheet &C.lxw_chartsheet, text &char, options &C.lxw_header_footer_options) C.lxw_error
+fn C.chartsheet_set_footer_opt(chartsheet &C.lxw_chartsheet, text &char, options &C.lxw_header_footer_options) C.lxw_error 
+
+fn C.lxw_chartsheet_new(init_data &C.lxw_worksheet_init_data) &C.lxw_chartsheet
+
+fn C.lxw_chartsheet_free(chartsheet &C.lxw_chartsheet)
+pub fn (cs Chartsheet)deallocate() {
+    C.lxw_chartsheet_free(cs.ptr)
 }
 
 
