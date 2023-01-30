@@ -876,6 +876,176 @@ pub enum ChartType as u8 {
     radar_filled = C.LXW_CHART_RADAR_FILLED
 }
 
+
+pub enum ChartLegendPosition as u8 { // lxw_chart_legend_position
+    @none = C.LXW_CHART_LEGEND_NONE
+    right = C.LXW_CHART_LEGEND_RIGHT
+    left = C.LXW_CHART_LEGEND_LEFT
+    top = C.LXW_CHART_LEGEND_TOP
+    bottom = C.LXW_CHART_LEGEND_BOTTOM
+    top_right = C.LXW_CHART_LEGEND_TOP_RIGHT
+    overlay_right = C.LXW_CHART_LEGEND_OVERLAY_RIGHT
+    overlay_left = C.LXW_CHART_LEGEND_OVERLAY_LEFT
+    overlay_top_right = C.LXW_CHART_LEGEND_OVERLAY_TOP_RIGHT
+}
+
+pub enum ChartLineDashType as u8 { // lxw_chart_line_dash_type 
+    solid = C.LXW_CHART_LINE_DASH_SOLID
+    round_dot = C.LXW_CHART_LINE_DASH_ROUND_DOT
+    sqaure_dot = C.LXW_CHART_LINE_DASH_SQUARE_DOT
+    dash = C.LXW_CHART_LINE_DASH_DASH
+    dash_dot = C.LXW_CHART_LINE_DASH_DASH_DOT
+    long_dash = C.LXW_CHART_LINE_DASH_LONG_DASH
+    long_dash_dot = C.LXW_CHART_LINE_DASH_LONG_DASH_DOT
+    long_dash_dot_dot = C.LXW_CHART_LINE_DASH_LONG_DASH_DOT_DOT
+    line_dash_dot = C.LXW_CHART_LINE_DASH_DOT
+    system_dash_dot = C.LXW_CHART_LINE_DASH_SYSTEM_DASH_DOT
+    system_dash_dot_dot = C.LXW_CHART_LINE_DASH_SYSTEM_DASH_DOT_DOT
+}
+
+pub enum ChartMarkerType as u8 { // lxw_chart_marker_type 
+    automatic = C.LXW_CHART_MARKER_AUTOMATIC
+    @none = C.LXW_CHART_MARKER_NONE
+    sqaure = C.LXW_CHART_MARKER_SQUARE
+    diamond = C.LXW_CHART_MARKER_DIAMOND
+    triangle = C.LXW_CHART_MARKER_TRIANGLE
+    marker_x = C.LXW_CHART_MARKER_X
+    star = C.LXW_CHART_MARKER_STAR
+    short_dash = C.LXW_CHART_MARKER_SHORT_DASH
+    long_dash = C.LXW_CHART_MARKER_LONG_DASH
+    circle = C.LXW_CHART_MARKER_CIRCLE
+    plus = C.LXW_CHART_MARKER_PLUS
+}
+
+pub enum ChartPatternType as u8 { // lxw_chart_pattern_type 
+    @none = C.LXW_CHART_PATTERN_NONE
+    percent_5 = C.LXW_CHART_PATTERN_PERCENT_5
+    percent_10 = C.LXW_CHART_PATTERN_PERCENT_10
+    percent_20 = C.LXW_CHART_PATTERN_PERCENT_20
+    percent_25 = C.LXW_CHART_PATTERN_PERCENT_25
+    percent_30 = C.LXW_CHART_PATTERN_PERCENT_30
+    percent_40 = C.LXW_CHART_PATTERN_PERCENT_40
+    percent_50 = C.LXW_CHART_PATTERN_PERCENT_50
+    percent_60 = C.LXW_CHART_PATTERN_PERCENT_60
+    percent_70 = C.LXW_CHART_PATTERN_PERCENT_70
+    percent_75 = C.LXW_CHART_PATTERN_PERCENT_75
+    percent_80 = C.LXW_CHART_PATTERN_PERCENT_80
+    percent_90 = C.LXW_CHART_PATTERN_PERCENT_90
+    light_downward_diagonal = C.LXW_CHART_PATTERN_LIGHT_DOWNWARD_DIAGONAL
+    light_upward_diagonal = C.LXW_CHART_PATTERN_LIGHT_UPWARD_DIAGONAL
+    dark_downward_diagonal = C.LXW_CHART_PATTERN_DARK_DOWNWARD_DIAGONAL
+    dark_upward_diagonal = C.LXW_CHART_PATTERN_DARK_UPWARD_DIAGONAL
+    wide_downwrd_diagonal = C.LXW_CHART_PATTERN_WIDE_DOWNWARD_DIAGONAL
+    wide_upward_diagonal = C.LXW_CHART_PATTERN_WIDE_UPWARD_DIAGONAL
+    light_vertical = C.LXW_CHART_PATTERN_LIGHT_VERTICAL
+    light_horizontal = C.LXW_CHART_PATTERN_LIGHT_HORIZONTAL
+    narrow_vertical = C.LXW_CHART_PATTERN_NARROW_VERTICAL
+    narrow_horizontal = C.LXW_CHART_PATTERN_NARROW_HORIZONTAL
+    dark_vertical = C.LXW_CHART_PATTERN_DARK_VERTICAL
+    dark_horizontal = C.LXW_CHART_PATTERN_DARK_HORIZONTAL
+    dashed_downward_diagonal = C.LXW_CHART_PATTERN_DASHED_DOWNWARD_DIAGONAL
+    dahsed_upward_diagonal = C.LXW_CHART_PATTERN_DASHED_UPWARD_DIAGONAL
+    dashed_horizontal = C.LXW_CHART_PATTERN_DASHED_HORIZONTAL
+    dashed_vertical = C.LXW_CHART_PATTERN_DASHED_VERTICAL
+    small_confetti = C.LXW_CHART_PATTERN_SMALL_CONFETTI
+    large_confetti = C.LXW_CHART_PATTERN_LARGE_CONFETTI
+    zigzag = C.LXW_CHART_PATTERN_ZIGZAG
+    wave = C.LXW_CHART_PATTERN_WAVE
+    diagonal_brick = C.LXW_CHART_PATTERN_DIAGONAL_BRICK
+    horizontal_brick = C.LXW_CHART_PATTERN_HORIZONTAL_BRICK
+    weave = C.LXW_CHART_PATTERN_WEAVE
+    plaid = C.LXW_CHART_PATTERN_PLAID
+    divot = C.LXW_CHART_PATTERN_DIVOT
+    dotted_grid = C.LXW_CHART_PATTERN_DOTTED_GRID
+    dotted_diamond = C.LXW_CHART_PATTERN_DOTTED_DIAMOND
+    shingle = C.LXW_CHART_PATTERN_SHINGLE
+    trellis = C.LXW_CHART_PATTERN_TRELLIS
+    sphere = C.LXW_CHART_PATTERN_SPHERE
+    small_grid = C.LXW_CHART_PATTERN_SMALL_GRID
+    large_grid = C.LXW_CHART_PATTERN_LARGE_GRID
+    small_check = C.LXW_CHART_PATTERN_SMALL_CHECK
+    large_check = C.LXW_CHART_PATTERN_LARGE_CHECK
+    outlined_diamong = C.LXW_CHART_PATTERN_OUTLINED_DIAMOND
+    solid_diamond = C.LXW_CHART_PATTERN_SOLID_DIAMOND
+}
+
+pub enum ChartLabelPosition as u8 { // lxw_chart_label_position 
+    default = C.LXW_CHART_LABEL_POSITION_DEFAULT
+    center = C.LXW_CHART_LABEL_POSITION_CENTER
+    right = C.LXW_CHART_LABEL_POSITION_RIGHT
+    left = C.LXW_CHART_LABEL_POSITION_LEFT
+    above = C.LXW_CHART_LABEL_POSITION_ABOVE
+    below = C.LXW_CHART_LABEL_POSITION_BELOW
+    inside_base = C.LXW_CHART_LABEL_POSITION_INSIDE_BASE
+    inside_end = C.LXW_CHART_LABEL_POSITION_INSIDE_END
+    outside_end = C.LXW_CHART_LABEL_POSITION_OUTSIDE_END
+    best_fit = C.LXW_CHART_LABEL_POSITION_BEST_FIT
+}
+
+pub enum CharLabelSeparator as u8 { // lxw_chart_label_separator 
+    comma = C.LXW_CHART_LABEL_SEPARATOR_COMMA
+    semicolon = C.LXW_CHART_LABEL_SEPARATOR_SEMICOLON
+    period = C.LXW_CHART_LABEL_SEPARATOR_PERIOD
+    newline = C.LXW_CHART_LABEL_SEPARATOR_NEWLINE
+    space = C.LXW_CHART_LABEL_SEPARATOR_SPACE
+}
+
+pub enum ChartAxisType as u8 { // lxw_chart_axis_type 
+    type_x = C.LXW_CHART_AXIS_TYPE_X
+    type_y = C.LXW_CHART_AXIS_TYPE_Y
+}
+
+pub enum ChartSubtype as u8 { // lxw_chart_subtype 
+    @none = C.LXW_CHART_SUBTYPE_NONE
+    stacked = C.LXW_CHART_SUBTYPE_STACKED
+    stacked_percent = C.LXW_CHART_SUBTYPE_STACKED_PERCENT
+}
+
+pub enum ChartGrouping as u8 { // lxw_chart_grouping
+    clustered = C.LXW_GROUPING_CLUSTERED
+    standrd = C.LXW_GROUPING_STANDARD
+    percent_stacked = C.LXW_GROUPING_PERCENTSTACKED
+    stacked = C.LXW_GROUPING_STACKED
+}
+
+pub enum ChartAxisTickPosition as u8 { // lxw_chart_axis_tick_position 
+    default = C.LXW_CHART_AXIS_POSITION_DEFAULT
+    on_tick = C.LXW_CHART_AXIS_POSITION_ON_TICK
+    between = C.LXW_CHART_AXIS_POSITION_BETWEEN
+}
+
+pub enum ChartAxisLabelPosition as u8 { // lxw_chart_axis_label_position 
+    next_to = C.LXW_CHART_AXIS_LABEL_POSITION_NEXT_TO
+    @none = C.LXW_CHART_AXIS_LABEL_POSITION_NONE
+}
+
+pub enum ChartAxisLabelAlignment as u8 { // lxw_chart_axis_label_alignment 
+    center = C.LXW_CHART_AXIS_LABEL_ALIGN_CENTER
+    left = C.LXW_CHART_AXIS_LABEL_ALIGN_LEFT
+    right = C.LXW_CHART_AXIS_LABEL_ALIGN_RIGHT
+}
+
+pub enum ChartAxisDisplayUnit as u8 { // lxw_chart_axis_display_unit 
+    @none = C.LXW_CHART_AXIS_UNITS_NONE
+    hundreds = C.LXW_CHART_AXIS_UNITS_HUNDREDS
+    thousands = C.LXW_CHART_AXIS_UNITS_THOUSANDS
+    ten_thousands = C.LXW_CHART_AXIS_UNITS_TEN_THOUSANDS
+    hundredthousends = C.LXW_CHART_AXIS_UNITS_HUNDRED_THOUSANDS
+    millions = C.LXW_CHART_AXIS_UNITS_MILLIONS
+    ten_millions = C.LXW_CHART_AXIS_UNITS_TEN_MILLIONS
+    hundred_millions = C.LXW_CHART_AXIS_UNITS_HUNDRED_MILLIONS
+    billions = C.LXW_CHART_AXIS_UNITS_BILLIONS
+    trillions = C.LXW_CHART_AXIS_UNITS_TRILLIONS
+}
+
+pub enum ChartAxisTickMark as u8 { // lxw_chart_axis_tick_mark 
+    default = C.LXW_CHART_AXIS_TICK_MARK_DEFAULT
+    @none = C.LXW_CHART_AXIS_TICK_MARK_NONE
+    inside = C.LXW_CHART_AXIS_TICK_MARK_INSIDE
+    outside = C.LXW_CHART_AXIS_TICK_MARK_OUTSIDE
+    crossing = C.LXW_CHART_AXIS_TICK_MARK_CROSSING
+}
+
 struct C.lxw_chart {
 }
 
