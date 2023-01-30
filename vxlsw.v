@@ -26,10 +26,15 @@ pub fn new_workbook(filename string) Workbook {
     }
 }
 
+pub fn (wb Workbook)filename() string {
+    return wb.filename_str 
+}
+
 fn C.workbook_add_worksheet(wb &C.lxw_workbook, sheet_name &char) &C.lxw_worksheet
 pub fn (wb Workbook)add_sheet(sheet_name string) Worksheet {
     return Worksheet {
         ptr: C.workbook_add_worksheet(wb.ptr, sheet_name.str)
+        name: sheet_name
     }
 }
 
@@ -46,6 +51,11 @@ struct C.lxw_worksheet {
 
 pub struct Worksheet {
     ptr &C.lxw_worksheet
+    name string = 'sheet'
+}
+
+pub fn (ws Worksheet)name() string {
+    return ws.name
 }
 
 fn C.worksheet_write_string(sheet &C.lxw_worksheet, row C.lxw_row_t, col C.lxw_col_t, text &char, format &C.lxw_format) C.lxw_error
@@ -876,7 +886,6 @@ pub enum ChartType as u8 {
     radar_filled = C.LXW_CHART_RADAR_FILLED
 }
 
-
 pub enum ChartLegendPosition as u8 { // lxw_chart_legend_position
     @none = C.LXW_CHART_LEGEND_NONE
     right = C.LXW_CHART_LEGEND_RIGHT
@@ -1058,6 +1067,79 @@ pub fn (wb Workbook)add_chart(chart_type ChartType) Chart {
     return unsafe { Chart {
         ptr: C.workbook_add_chart(wb.ptr, u8(chart_type))
     }}
+}
+
+struct C.lxw_chart_series {}
+pub struct ChartSeries {
+    ptr &C.lxw_chart_series
+}
+
+fn C.chart_add_series(chart &C.lxw_chart, categories &char, values &char) &C.lxw_chart_series 
+pub fn (c Chart)add_series(categories string, values string) ChartSeries {
+    return ChartSeries {
+        ptr: C.chart_add_series(c.ptr, &char(categories.str), &char(values.str))
+    }
+}
+
+fn C.chart_series_set_categories(series &C.lxw_chart_series, sheetname &char, 
+                                 first_row C.lxw_row_t, first_col C.lxw_col_t, 
+                                 last_row C.lxw_row_t, last_col C.lxw_col_t)
+pub fn (cs ChartSeries)set_categories(worksheet Worksheet,
+                                      first_row u32, first_col u16, 
+                                     last_row u32, last_col u16) {
+    C.chart_series_set_categories(cs.ptr, &char(worksheet.name().str), 
+                                  C.lxw_row_t(first_row), C.lxw_col_t(first_col), 
+                                  C.lxw_row_t(last_row), C.lxw_col_t(last_col))
+}
+
+fn C.chart_series_set_values(series &C.lxw_chart_series, sheetname &char, 
+                             first_row C.lxw_row_t, first_col C.lxw_col_t,
+                             last_row C.lxw_row_t, last_col C.lxw_col_t)
+pub fn (cs ChartSeries)set_values(worksheet Worksheet, 
+                                  first_row u32, first_col u16, last_row u32, last_col u16) {
+    C.chart_series_set_values(cs.ptr, &char(worksheet.name().str),
+                              C.lxw_row_t(first_row), C.lxw_col_t(first_col),
+                              C.lxw_row_t(last_row), C.lxw_col_t(last_col))
+}
+
+fn C.chart_series_set_name(series &C.lxw_chart_series, name &char)
+pub fn (cs ChartSeries)set_name(name string) {
+    C.chart_series_set_name(cs.ptr, &char(name.str))
+}
+
+fn C.chart_series_set_name_range(series &C.lxw_chart_series, sheetname &char, row C.lxw_row_t, col C.lxw_col_t)
+pub fn (cs ChartSeries)set_name_range(worksheet Worksheet, row u32, col u16) {
+    C.chart_series_set_name_range(cs.ptr, &char(worksheet.name().str), C.lxw_row_t(row), C.lxw_col_t(col))
+}
+
+struct C.lxw_chart_line {
+    color C.lxw_color_t
+    @none u8 
+    width f32 
+    dash_type u8 
+    transparency u8 
+}
+
+pub struct ChartLine {
+    handler C.lxw_chart_line
+}
+
+pub fn new_chart_line(color DefinedColors, visible bool, width f32, dash_type ChartLineDashType, transparency u8) ChartLine {
+    none_u8 := u8(if visible {1} else {0})
+    return unsafe { ChartLine {
+        handler: C.lxw_chart_line {
+            color: C.lxw_color_t(color),
+            @none: none_u8, 
+            dash_type: u8(dash_type),
+            transparency: transparency
+            }
+        }
+    }
+}
+
+fn C.chart_series_set_line(series &C.lxw_chart_series, line &C.lxw_chart_line)
+pub fn (cs ChartSeries)set_line(line ChartLine) {
+    C.chart_series_set_line(cs.ptr, &line.handler)
 }
 
 // DocProperties
@@ -1517,6 +1599,27 @@ pub enum DefinedColors as u32 {
     white = C.LXW_COLOR_WHITE
     yellow = C.LXW_COLOR_YELLOW
 }
+
+pub struct ColorU32 {
+pub mut:
+    blank u8 = 0x00 
+    red u8
+    green u8 
+    blue u8
+}
+
+pub fn (c ColorU32)uint32() u32 {
+    return (((u32(c.red) << 16) & 0x00_FF_00_00) | ((u32(c.green) << 8) & 0x00_00_FF_00) | ((c.blue) & 0x00_00_00_FF))
+}
+
+pub fn (mut c ColorU32)parse(value u32) {
+    c.red = u8(((value & 0x00_FF_00_00) >> 16) & 0xFF)
+    c.green = u8(((value & 0x00_00_FF_00) >> 8) & 0xFF)
+    c.blue = u8(value & 0xFF)
+}
+
+pub type Color = ColorU32 | DefinedColors
+
 
 // Error 
 pub enum ReturnCode as int {
